@@ -2,8 +2,8 @@ require("dotenv").config();
 
 // DISCORDJS REQUIREMENTS
 
-/* const discord = require("discord.js");
-const {Client, EmbedBuilder} = discord;
+const discord = require("discord.js");
+const {Client, IntentsBitField ,EmbedBuilder} = discord;
 const dcClient = new Client({
     intents:[
         IntentsBitField.Flags.Guilds,
@@ -13,10 +13,14 @@ const dcClient = new Client({
         IntentsBitField.Flags.MessageContent
     ]
 });
-dcClient.login(process.env.TOKEN); */
+dcClient.login(process.env.TOKEN);
 
 // WHATSAPP API REQUIREMENTS
 const client = require('twilio')(process.env.ACCOUNT_SID, process.env.AUTH_TOKEN);
+
+// MONGODB REQUIREMENTS
+const mongoDB = require("mongoose");
+const User = require("./userSchema.js");
 
 // OTHER REQUIREMENTS
 const prompt = require('prompt-sync')();
@@ -30,6 +34,31 @@ const readline = require("readline");
 
 //const returnMail = require("./emailTemplate.js");
 //const returnAcceptHTML = require("./acceptHTML.js");
+
+// MAIN FUNCTION
+
+async function main(){
+
+    try {
+        await mongoDB.connect(`mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@bakdatabase.md3x43z.mongodb.net/?retryWrites=true&w=majority`);
+        console.log("Successfully connected to MongoDB");
+    } catch (error) {
+        console.log("Could not connect to MongoDB: " + error);
+    }
+
+};
+
+/**
+ * @param {MongoClient} client 
+ */
+async function listDatabases(client){
+    databasesList = await client.db().admin().listDatabases();
+ 
+    console.log("Databases: ");
+    databasesList.databases.forEach(db => console.log(` - ${db.name}`));
+};
+
+main().catch(console.error);
 
 //  REST API
 const App = express();
@@ -99,17 +128,59 @@ async function respond(req){
         sendContactMsg(userPhone);
     }
 
+    // contact us reply
+    if(repliedMsgSID){
+        completedContactMsg(userPhone, repliedMsgSID, msg);
+    }
 };
 
 // SUBPROGRAMS
 
 async function sendContactMsg(to){
-    await client.messages.create({
-        body: "You have chosen to contact with us :) When you want to write, make sure that your writing is in one message and you have to reply that message to THIS message, so we can know this writing is for you contacting to us! We would like to hear from you and respond you back as soon as possible.",
-        from: process.env.SERVICE_SID,
-        to: to
-    });
+
+    try {
+        const msg = await client.messages.create({
+            body: "You have chosen to contact with us :) When you want to write, make sure that your writing is in one message and you have to reply that message to THIS message, so we can know this writing is for you contacting to us! We would like to hear from you and respond you back as soon as possible.",
+            from: process.env.SERVICE_SID,
+            to: to
+        });
+
+        await User.updateOne({phone_number: to}, {phone_number: to, last_contact_msg_sid: msg.sid}, {upsert: true});
+    } catch (error) {
+        console.log("Error occured in contact us stage: " + error);
+    }
+    
 }
+
+async function completedContactMsg(to, repliedMsgSID, msg){
+    try {
+        const verified = await User.findOne({last_contact_msg_sid: repliedMsgSID, phone_number: to});
+        if(verified){
+            console.log(msg);
+
+            const date = verified.last_msg_send;
+            if(date && (Date.now() - date) / 1000 < 300){
+                await client.messages.create({
+                    body: "Maalesef mesajınız bile iletilemedi. Bizlere bir daha yazabilmeniz için bir önceki mesajınız ile bu mesajınız arasında 5 dakika olması gerekiyor. Birazdan tekrar deneyebilirsiniz :)",
+                    from: process.env.SERVICE_SID,
+                    to: to
+                });
+            }
+            else{
+                await client.messages.create({
+                    body: "Mesajınız için çok teşekkürler. Size en yakın zamanda bu numaradan dönüş sağlayacağız. İyi günler dileriz :)",
+                    from: process.env.SERVICE_SID,
+                    to: to
+                });
+
+                await User.updateOne({phone_number: to}, {last_msg_send: Date.now()});
+            }
+            
+        }
+    } catch (error) {
+        console.log("Error occured in contact us stage: " + error);
+    }
+};  
 
 async function displayActivities(to){
 
