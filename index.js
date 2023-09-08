@@ -119,6 +119,11 @@ async function respond(req){
     //  LIST CHOICES
 
     // current activities
+
+    if(listID === "general_info"){
+        generalInfo(userPhone);
+    }
+
     if(listID === "current_activities"){
         displayActivities(userPhone);
     }
@@ -135,6 +140,19 @@ async function respond(req){
 };
 
 // SUBPROGRAMS
+
+async function generalInfo(to){
+    await client.messages.create({
+        body: "6 Şubat'ta meydana gelen ve kırk binden fazla vatandaşımızın ölmesine sebep olan depremler sırasında bireysel olarak, sonrasındaysa grup olarak bu süreçte yaşanan ve pek çoğu insanımızın hayatını, yakınlarını, yaşadığı evleri ve şehirleri kaybettiği bu süreci hafifletebilmek adına gerekirse sadece bir taşı bile beraber kaldırabilmiş olmak için Bilkent Afet Kulübü'nü kurmuş bulunuyoruz. Yapmayı hedeflediğimiz birçok şey var. Bunlardan bazıları ilk yardım eğitimleri ve arama kurtarma ekibi kurabilmek için sağlanması gereken çeşitli eğitimleri kapsıyor. Afet alanında farkındalığı arttırmak adına afet ile ilgili makaleler, haberler, röportajlar, söyleşiler vb. birçok anlatıyı postlarımızla ve ilerleyen süreçlerde farklı platformlarda paylaşmayı planlıyoruz.",
+        from: process.env.SERVICE_SID,
+        to: to
+    });
+    await client.messages.create({
+        body: "İçerisinde Başkent, Boğaziçi, Ufuk gibi üniversitelerin olduğu bir afet ağı kurarak zorlu durumlarda daha koordine bir şekilde ilerlemeyi umuyoruz. Aynı şekilde, yaşanan afetlerdeki sorunlarla başa çıkabilmek adına teknolojik çözümler geliştirmek ve bunun için Hackathon ve zirve gibi etkinlikler düzenlemeyi de istiyoruz. Bütün bunlar ve daha sayamadıklarımız, esasında yaşadığımız ağır süreci bir nebze de olsa hafifletebilmek içindir. Çok zorlu ve hepimizi sarsan süreçlerden geçtik, bu süreçlerin tekrarlanmamasını temenni ediyor; doğrudan veya dolaylı bu süreçte etkilenen herkesin acısını paylaşıyoruz. Eğer ki siz de yapmayı planladığımız bu projelerde bizimle beraber olmak istiyorsanız, 9 Ağustos'ta hepinizi standımıza bekliyor olacağız. Daha güzel günlerde görüşmek üzere. Takipte kalın :)",
+        from: process.env.SERVICE_SID,
+        to: to
+    });
+}
 
 async function sendContactMsg(to){
 
