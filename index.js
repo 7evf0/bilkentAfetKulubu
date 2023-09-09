@@ -102,10 +102,10 @@ async function respond(req){
     const username = req.ProfileName;
     const userPhone = req.From;
     const mediaType = req.MediaContentType0;
+    const id = req.ButtonPayload;
 
     // LIST VARIABLES
     const listID = req.ListId;
-    console.log(req);
 
     // CONTACT US VARIABLES
     const repliedMsgSID = req.OriginalRepliedMessageSid;
@@ -134,29 +134,77 @@ async function respond(req){
     }
 
     // contact us reply
-    if(repliedMsgSID){
+    /* if(repliedMsgSID){
         completedContactMsg(userPhone, repliedMsgSID, msg);
+    } */
+
+    // ilk yardım başvuru
+    if(id === "bak_ilk_yardim_basvur"){
+        addApplication(userPhone, username);
     }
 };
 
 // SUBPROGRAMS
 
+async function sendSocialMedia(to){
+    try {
+        await client.messages.create({
+            body: "Instagram: https://instagram.com/bilkentafetkulubu?igshid=MzRlODBiNWFlZA==\nLinkedIn: https://www.linkedin.com/in/bilkent-afet-kul%C3%BCb%C3%BC-2a19a2289",
+            from: process.env.SERVICE_SID,
+            to: to
+        });
+    } catch (error) {
+        console.log("Error occured in contact us stage: " + error);
+    }
+}
+
+async function addApplication(to, username){
+    try {
+        const appliedUser = await User.find({phone_number: to});
+
+        if(!appliedUser.length){
+            await User.updateOne({phone_number: to}, {phone_number: to, name: username}, {upsert: true});
+            await client.messages.create({
+                body: "Başvurunuz başarıyla tamamlandı. En yakın vakitte size detaylarla dönüş sağlayacağız. İyi günler dileriz :)",
+                from: process.env.SERVICE_SID,
+                to: to
+            });
+        }
+        else{
+            await client.messages.create({
+                body: "Bu etkinliğe başvurmuş gözükmektesiniz. İlginiz için tekrardan teşekkürler :)",
+                from: process.env.SERVICE_SID,
+                to: to
+            });
+        }
+        await sendSocialMedia(to);
+    } catch (error) {
+        console.log("Error occured in contact us stage: " + error);
+    }
+    
+};
+
 async function generalInfo(to){
-    await client.messages.create({
-        body: "6 Şubat'ta meydana gelen ve kırk binden fazla vatandaşımızın ölmesine sebep olan depremler sırasında bireysel olarak, sonrasındaysa grup olarak bu süreçte yaşanan ve pek çoğu insanımızın hayatını, yakınlarını, yaşadığı evleri ve şehirleri kaybettiği bu süreci hafifletebilmek adına gerekirse sadece bir taşı bile beraber kaldırabilmiş olmak için Bilkent Afet Kulübü'nü kurmuş bulunuyoruz. Yapmayı hedeflediğimiz birçok şey var. Bunlardan bazıları ilk yardım eğitimleri ve arama kurtarma ekibi kurabilmek için sağlanması gereken çeşitli eğitimleri kapsıyor. Afet alanında farkındalığı arttırmak adına afet ile ilgili makaleler, haberler, röportajlar, söyleşiler vb. birçok anlatıyı postlarımızla ve ilerleyen süreçlerde farklı platformlarda paylaşmayı planlıyoruz.",
-        from: process.env.SERVICE_SID,
-        to: to
-    });
-    await client.messages.create({
-        body: "İçerisinde Başkent, Boğaziçi, Ufuk gibi üniversitelerin olduğu bir afet ağı kurarak zorlu durumlarda daha koordine bir şekilde ilerlemeyi umuyoruz. Aynı şekilde, yaşanan afetlerdeki sorunlarla başa çıkabilmek adına teknolojik çözümler geliştirmek ve bunun için Hackathon ve zirve gibi etkinlikler düzenlemeyi de istiyoruz. Bütün bunlar ve daha sayamadıklarımız, esasında yaşadığımız ağır süreci bir nebze de olsa hafifletebilmek içindir. Çok zorlu ve hepimizi sarsan süreçlerden geçtik, bu süreçlerin tekrarlanmamasını temenni ediyor; doğrudan veya dolaylı bu süreçte etkilenen herkesin acısını paylaşıyoruz. Eğer ki siz de yapmayı planladığımız bu projelerde bizimle beraber olmak istiyorsanız, 9 Ağustos'ta hepinizi standımıza bekliyor olacağız. Daha güzel günlerde görüşmek üzere. Takipte kalın :)",
-        from: process.env.SERVICE_SID,
-        to: to
-    });
+    try {
+        await client.messages.create({
+            body: "6 Şubat'ta meydana gelen ve kırk binden fazla vatandaşımızın ölmesine sebep olan depremler sırasında bireysel olarak, sonrasındaysa grup olarak bu süreçte yaşanan ve pek çoğu insanımızın hayatını, yakınlarını, yaşadığı evleri ve şehirleri kaybettiği bu süreci hafifletebilmek adına gerekirse sadece bir taşı bile beraber kaldırabilmiş olmak için Bilkent Afet Kulübü'nü kurmuş bulunuyoruz. Yapmayı hedeflediğimiz birçok şey var. Bunlardan bazıları ilk yardım eğitimleri ve arama kurtarma ekibi kurabilmek için sağlanması gereken çeşitli eğitimleri kapsıyor. Afet alanında farkındalığı arttırmak adına afet ile ilgili makaleler, haberler, röportajlar, söyleşiler vb. birçok anlatıyı postlarımızla ve ilerleyen süreçlerde farklı platformlarda paylaşmayı planlıyoruz.",
+            from: process.env.SERVICE_SID,
+            to: to
+        });
+        await client.messages.create({
+            body: "İçerisinde Başkent, Boğaziçi, Ufuk gibi üniversitelerin olduğu bir afet ağı kurarak zorlu durumlarda daha koordine bir şekilde ilerlemeyi umuyoruz. Aynı şekilde, yaşanan afetlerdeki sorunlarla başa çıkabilmek adına teknolojik çözümler geliştirmek ve bunun için Hackathon ve zirve gibi etkinlikler düzenlemeyi de istiyoruz. Bütün bunlar ve daha sayamadıklarımız, esasında yaşadığımız ağır süreci bir nebze de olsa hafifletebilmek içindir. Çok zorlu ve hepimizi sarsan süreçlerden geçtik, bu süreçlerin tekrarlanmamasını temenni ediyor; doğrudan veya dolaylı bu süreçte etkilenen herkesin acısını paylaşıyoruz. Eğer ki siz de yapmayı planladığımız bu projelerde bizimle beraber olmak istiyorsanız, 9 Ağustos'ta hepinizi standımıza bekliyor olacağız. Daha güzel günlerde görüşmek üzere. Takipte kalın :)",
+            from: process.env.SERVICE_SID,
+            to: to
+        });
+        await sendSocialMedia(to);
+    } catch (error) {
+        console.log("Error occured in contact us stage: " + error);
+    }
 }
 
 async function sendContactMsg(to){
 
-    try {
+    /* try {
         const msg = await client.messages.create({
             body: "You have chosen to contact with us :) When you want to write, make sure that your writing is in one message and you have to reply that message to THIS message, so we can know this writing is for you contacting to us! We would like to hear from you and respond you back as soon as possible.",
             from: process.env.SERVICE_SID,
@@ -164,6 +212,17 @@ async function sendContactMsg(to){
         });
 
         await User.updateOne({phone_number: to}, {phone_number: to, last_contact_msg_sid: msg.sid}, {upsert: true});
+    } catch (error) {
+        console.log("Error occured in contact us stage: " + error);
+    } */
+
+    try {
+        await client.messages.create({
+            body: "Chatbotumuzun bu kısmı an itibariyle yapım aşamasındadır. Mesajlarınızı bize iletebilmeniz için en yakın vakitte bu kısmı tamamlamak için çalışıyoruz :)",
+            from: process.env.SERVICE_SID,
+            to: to
+        });
+        await sendSocialMedia(to);
     } catch (error) {
         console.log("Error occured in contact us stage: " + error);
     }
@@ -235,7 +294,7 @@ async function displayActivities(to){
 async function sendMainMultipleChoice(to, profileName){
     await client.messages
             .create({
-                contentSid: "HX0755339f90923c5ff085c83addb0dd36",
+                contentSid: process.env.MAIN_MULTIPLE_CHOICE,
                 from: process.env.SERVICE_SID,
                 contentVariables: JSON.stringify({
                     1: profileName
