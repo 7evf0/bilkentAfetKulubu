@@ -13,7 +13,9 @@ const dcClient = new Client({
         IntentsBitField.Flags.MessageContent
     ]
 });
-dcClient.login(process.env.TOKEN);
+dcClient.login(process.env.TOKEN).then(() => {
+    console.log("Discord Logged In");
+});
 
 // WHATSAPP API REQUIREMENTS
 const client = require('twilio')(process.env.ACCOUNT_SID, process.env.AUTH_TOKEN);
@@ -34,6 +36,10 @@ const readline = require("readline");
 
 //const returnMail = require("./emailTemplate.js");
 //const returnAcceptHTML = require("./acceptHTML.js");
+
+// GENERAL INFO REQUIREMENTS
+const generalInfo = require("./general_info.js")
+const displayActivities = require("./current_activities.js")
 
 // MAIN FUNCTION
 
@@ -121,11 +127,11 @@ async function respond(req){
     // current activities
 
     if(listID === "general_info"){
-        generalInfo(userPhone);
+        generalInfo(client, dcClient, userPhone);
     }
 
     if(listID === "current_activities"){
-        displayActivities(userPhone);
+        displayActivities(client, dcClient, userPhone);
     }
 
     // contact us
@@ -146,17 +152,6 @@ async function respond(req){
 
 // SUBPROGRAMS
 
-async function sendSocialMedia(to){
-    try {
-        await client.messages.create({
-            body: "Instagram: https://instagram.com/bilkentafetkulubu?igshid=MzRlODBiNWFlZA==\nLinkedIn: https://www.linkedin.com/in/bilkent-afet-kul%C3%BCb%C3%BC-2a19a2289",
-            from: process.env.SERVICE_SID,
-            to: to
-        });
-    } catch (error) {
-        console.log("Error occured in contact us stage: " + error);
-    }
-}
 
 async function addApplication(to, username){
     try {
@@ -184,7 +179,7 @@ async function addApplication(to, username){
     
 };
 
-async function generalInfo(to){
+/* async function generalInfo(to){
     try {
         await client.messages.create({
             body: "6 Şubat'ta meydana gelen ve kırk binden fazla vatandaşımızın ölmesine sebep olan depremler sırasında bireysel olarak, sonrasındaysa grup olarak bu süreçte yaşanan ve pek çoğu insanımızın hayatını, yakınlarını, yaşadığı evleri ve şehirleri kaybettiği bu süreci hafifletebilmek adına gerekirse sadece bir taşı bile beraber kaldırabilmiş olmak için Bilkent Afet Kulübü'nü kurmuş bulunuyoruz. Yapmayı hedeflediğimiz birçok şey var. Bunlardan bazıları ilk yardım eğitimleri ve arama kurtarma ekibi kurabilmek için sağlanması gereken çeşitli eğitimleri kapsıyor. Afet alanında farkındalığı arttırmak adına afet ile ilgili makaleler, haberler, röportajlar, söyleşiler vb. birçok anlatıyı postlarımızla ve ilerleyen süreçlerde farklı platformlarda paylaşmayı planlıyoruz.",
@@ -200,7 +195,7 @@ async function generalInfo(to){
     } catch (error) {
         console.log("Error occured in contact us stage: " + error);
     }
-}
+} */
 
 async function sendContactMsg(to){
 
@@ -259,7 +254,7 @@ async function completedContactMsg(to, repliedMsgSID, msg){
     }
 };  
 
-async function displayActivities(to){
+/* async function displayActivities(to){
 
     var isAny = false;
 
@@ -289,7 +284,7 @@ async function displayActivities(to){
             })
         }
     });
-}
+} */
 
 async function sendMainMultipleChoice(to, profileName){
     await client.messages
