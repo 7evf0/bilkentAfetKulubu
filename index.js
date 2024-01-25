@@ -17,12 +17,12 @@ dcClient.login(process.env.TOKEN).then(() => {
     console.log("Discord Logged In");
 });
 
-// WHATSAPP API REQUIREMENTS
-const client = require('twilio')(process.env.ACCOUNT_SID, process.env.AUTH_TOKEN);
-
 // MONGODB REQUIREMENTS
 const mongoDB = require("mongoose");
 const User = require("./userSchema.js");
+
+// WHATSAPP API REQUIREMENTS
+const client = require('twilio')(process.env.ACCOUNT_SID, process.env.AUTH_TOKEN);
 
 // OTHER REQUIREMENTS
 const prompt = require('prompt-sync')();
@@ -37,16 +37,17 @@ const readline = require("readline");
 //const returnMail = require("./emailTemplate.js");
 //const returnAcceptHTML = require("./acceptHTML.js");
 
-// GENERAL INFO REQUIREMENTS
+// LOCAL REQUIREMENTS
 const generalInfo = require("./general_info.js")
 const displayActivities = require("./current_activities.js")
+const addApplication = require("./addApplication.js");
 
 // MAIN FUNCTION
 
 async function main(){
 
     try {
-        await mongoDB.connect(`mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@bakdatabase.md3x43z.mongodb.net/?retryWrites=true&w=majority`);
+        await mongoDB.connect(`mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@bak.3nqk8ik.mongodb.net/`);
         console.log("Successfully connected to MongoDB");
     } catch (error) {
         console.log("Could not connect to MongoDB: " + error);
@@ -145,15 +146,14 @@ async function respond(req){
     } */
 
     // ilk yardım başvuru
-    if(id === "bak_ilk_yardim_basvur"){
-        addApplication(userPhone, username);
+    if(id && id.startsWith("bak_apply_")){
+        addApplication(client, id, userPhone, username);
     }
 };
 
 // SUBPROGRAMS
 
-
-async function addApplication(to, username){
+/* async function addApplication(to, username){
     try {
         const appliedUser = await User.find({phone_number: to});
 
@@ -177,7 +177,7 @@ async function addApplication(to, username){
         console.log("Error occured in contact us stage: " + error);
     }
     
-};
+}; */
 
 /* async function generalInfo(to){
     try {

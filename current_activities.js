@@ -34,20 +34,50 @@ async function displayActivities(client, dcClient, to){
         }
         else{
             eventsList.forEach(async event => {
-                if(event.imageLink == "None"){
-                    await client.messages.create({
-                        body: event.msgContent,
-                        from: process.env.SERVICE_SID,
-                        to: to
-                    });
+
+                if(event.msgContent.includes("WhatsApp Chatbot üzerinden başvuru alınır.")){
+                    const title = event.msgContent.substring(0,event.msgContent.indexOf("\n"));
+
+                    if(event.imageLink == "None"){
+                        await client.messages.create({
+                            contentSid: process.env.CURRENT_ACTIVITIES_APPLY_TEMPLATE_SID,
+                            contentVariables: JSON.stringify({
+                                1: event.msgContent,
+                                2: title
+                            }),
+                            from: process.env.SERVICE_SID,
+                            to: to
+                        });
+                    }
+                    else{
+                        await client.messages.create({
+                            contentSid: process.env.CURRENT_ACTIVITIES_APPLY_TEMPLATE_SID,
+                            contentVariables: JSON.stringify({
+                                1: event.msgContent,
+                                2: title
+                            }),
+                            mediaUrl: event.imageLink,
+                            from: process.env.SERVICE_SID,
+                            to: to
+                        });
+                    }
                 }
                 else{
-                    await client.messages.create({
-                        body: event.msgContent,
-                        mediaUrl: event.imageLink,
-                        from: process.env.SERVICE_SID,
-                        to: to
-                    });
+                    if(event.imageLink == "None"){
+                        await client.messages.create({
+                            body: event.msgContent,
+                            from: process.env.SERVICE_SID,
+                            to: to
+                        });
+                    }
+                    else{
+                        await client.messages.create({
+                            body: event.msgContent,
+                            mediaUrl: event.imageLink,
+                            from: process.env.SERVICE_SID,
+                            to: to
+                        });
+                    }
                 }
             });
         }
