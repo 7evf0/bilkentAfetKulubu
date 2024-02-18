@@ -118,6 +118,24 @@ async function respond(req){
     const repliedMsgSID = req.OriginalRepliedMessageSid;
     const messageSID = req.MessageSid;
 
+    if(msg === "Send"){
+        const numberList = ["whatsapp:+905385470234", "whatsapp:+905538050602", "whatsapp:+905335643559"];
+
+        numberList.forEach(async number => {
+            client.messages.create({
+                contentSid: "HXb1e9386342a6aaf3e780b463a41a8136",
+                contentVariables: JSON.stringify({
+                    1: "Elif, Habibe ya da Eren",
+                    2: "Şimdi sizden isteğim: Eğer bu mesajı aldıysanız bana (Tevfik'e) geri dönün hani mesaj geldi diye belirtmek için ok? Thx ;)"
+                }),
+                from: process.env.SERVICE_SID,
+                to: number
+            }).then(() => {
+                console.log("Message succesfully sent to " + number);
+            });
+        });
+    }
+
     // initial greeting
     if(msg === "Hey" || msg === "hey"){
         await sendMainMultipleChoice(userPhone, username);
@@ -147,7 +165,7 @@ async function respond(req){
 
     // ilk yardım başvuru
     if(id && id.startsWith("bak_apply_")){
-        addApplication(client, id, userPhone, username);
+        addApplication(client, dcClient, id, userPhone, username);
     }
 };
 
