@@ -1,10 +1,8 @@
 const { Twilio } = require("twilio");
 require("dotenv").config();
 
-const {sendSocialMedia} = require("./other_methods");
+const {sendSocialMedia} = require("../other_methods");
 const { Client } = require("discord.js");
-
-
 
 /**
  * @param {String} to

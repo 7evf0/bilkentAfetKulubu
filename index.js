@@ -38,9 +38,9 @@ const readline = require("readline");
 //const returnAcceptHTML = require("./acceptHTML.js");
 
 // LOCAL REQUIREMENTS
-const generalInfo = require("./general_info.js")
-const displayActivities = require("./current_activities.js")
-const addApplication = require("./addApplication.js");
+const generalInfo = require("./main_features/general_info.js")
+const displayActivities = require("./main_features/current_activities.js")
+const addApplication = require("./main_features/addApplication.js");
 
 // MAIN FUNCTION
 
@@ -96,7 +96,7 @@ App.get("/reject", urlencodedParser, async (req, res) => {
     res.send("It is rejected!");
 }) */
 
-App.listen(3000, () => {
+App.listen(3001, () => {
     console.log("Heyyy, it is listened");
 });
 
