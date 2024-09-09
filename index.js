@@ -149,7 +149,7 @@ async function respond(req){
     }
 
     if(listID === "trivia"){
-        generalInfo(client, userPhone);
+        displayTrivia(client, userPhone);
     }
 
     if(listID === "current_activities"){
