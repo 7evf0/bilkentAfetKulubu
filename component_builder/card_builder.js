@@ -21,7 +21,7 @@ async function createTwilioCard() {
                             type: "URL"
                         },
                         {
-                            phone: "https://chat.whatsapp.com/EFsFXZJcDng4awx2A9hUlQ",
+                            url: "https://chat.whatsapp.com/EFsFXZJcDng4awx2A9hUlQ",
                             title: "WhatsApp",
                             type: "URL"
                         }
