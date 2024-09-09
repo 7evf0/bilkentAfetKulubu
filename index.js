@@ -162,7 +162,7 @@ async function respond(req){
     }
 
     // trivia options
-    if(listID.startsWith('option_')){
+    if(listID && listID.startsWith('option_')){
         const message = await client.messages(repliedMsgSID).fetch();
         const questionContext = message.body;
 
