@@ -163,7 +163,7 @@ async function respond(req){
 
     // trivia options
     if(listID.startsWith('option_')){
-        await client.messages(messageSid)
+        await client.messages(repliedMsgSID)
             .fetch()
             .then(message => console.log(message))
             .catch(error => console.error(error));
