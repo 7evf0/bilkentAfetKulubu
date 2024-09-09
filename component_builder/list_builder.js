@@ -19,35 +19,27 @@ async function createTwilioListPicker() {
     try {
         // Make the POST request
         const response = await axios.post(url, {
-            friendly_name: "owl_air_list",
-            language: "en",
+            friendly_name: "badi_main_list_09.09.2024",
+            language: "tr",
             variables: {
-                "1": "end_date"
+                "1": "isim"
             },
             types: {
                 "twilio/list-picker": {
-                    body: "Owl Air Flash Sale! Hurry! Sale ends on {{1}}!",
-                    button: "Select a destination",
+                    body: "Merhaba {{1}}!\n\n Bilkent Acil Durum ve İlk Yardım'a, yani kısaca BADİ'ye hoşgeldin!!\n\n Sana nasıl yardımcı olabilirim?",
+                    button: "Seçenekler",
                     items: [
                         {
-                            item: "SFO to NYC for $299",
-                            description: "Owl Air Flight 1337 to LGA",
-                            id: "SFO1337"
+                            item: "Genel Bilgi🌞",
+                            id: "general_info",
+                            description: "Bizim kim olduğumuzu ve bu süreçte neler amaçladığımızı öğren."
                         },
                         {
-                            item: "OAK to Denver for $149",
-                            description: "Owl Air Flight 5280 to DEN",
-                            id: "OAK5280"
-                        },
-                        {
-                            item: "LAX to Chicago for $199",
-                            description: "Owl Air Flight 96 to ORD",
-                            id: "LAX96"
+                            item: "Aktif Etkinlikler✨",
+                            description: "Devam eden etkinlikleri göreceksin, bunlardan bazılarına başvurabilirsin",
+                            id: "current_activities"
                         }
                     ]
-                },
-                "twilio/text": {
-                    body: "We have flights to the following destinations: (1) SFO, (2) OAK, (3) LAX. Hurry! Sale ends on {{1}}!"
                 }
             }
         }, {
