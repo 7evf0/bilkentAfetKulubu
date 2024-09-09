@@ -305,14 +305,47 @@ async function completedContactMsg(to, repliedMsgSID, msg){
 } */
 
 async function sendMainMultipleChoice(to, profileName){
+
+    // List Picker Item Details and Options
+    const options = [
+        {
+            id: 'general_info',
+            title: 'Genel Bilgi🌞',
+            description: 'Bizim kim olduğumuzu ve bu süreçte neler amaçladığımızı öğren.'
+        },
+        {
+            id: 'current_activities',
+            title: 'Aktif Etkinlikler✨',
+            description: 'Devam eden etkinlikleri göreceksin, bunlardan bazılarına başvurabilirsin'
+        }
+    ];
+
+    // Interactive List Picker Component
+    const interactiveMessage = {
+        type: 'list',
+        header: {
+            type: 'text',
+            text: `Hi ${profileName}, please choose an option`
+        },
+        body: {
+            text: 'Here are your options:'
+        },
+        action: {
+            button: 'Choose an option',
+            sections: [
+                {
+                    title: 'Main Options',
+                    rows: options
+                }
+            ]
+        }
+    };
+
     await client.messages
             .create({
-                contentSid: process.env.MAIN_MULTIPLE_CHOICE,
                 from: process.env.SERVICE_SID,
-                contentVariables: JSON.stringify({
-                    1: profileName
-                }),
                 to: to,
+                interactiveMessage: interactiveMessage
             });
 }
 

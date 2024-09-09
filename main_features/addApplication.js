@@ -2,7 +2,7 @@ const { Twilio } = require("twilio");
 
 // MONGODB REQUIREMENTS
 const mongoDB = require("mongoose");
-const User = require("../userSchema.js");
+const User = require("../mongo_schemas/userSchema.js");
 const {sendSocialMedia} = require("../other_methods");
 const { Client, Colors, EmbedBuilder } = require("discord.js");
 
