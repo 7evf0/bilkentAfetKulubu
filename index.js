@@ -161,10 +161,10 @@ async function respond(req){
         sendContactMsg(userPhone);
     }
 
-    // contact us reply
-    /* if(repliedMsgSID){
-        completedContactMsg(userPhone, repliedMsgSID, msg);
-    } */
+    // trivia options
+    if(listID.startsWith('option_')){
+        console.log(req);
+    }
 
     // ilk yardım başvuru
     if(id && id.startsWith("bak_apply_")){

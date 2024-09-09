@@ -233,4 +233,33 @@ const firstAidScenarioOptions = [
     ]
   ];
 
-  module.exports = {firstAidScenarioOptions, firstAidScenarioTitles, firstAidScenarios};
+  const correctOptions = [
+    "option_b", // 1. Piknik Senaryosu (Köpek Isırığı)
+    "option_c", // 2. Piknik Senaryosu (Bilek Burkulması)
+    "option_d", // 3. Kamp Senaryosu (Kol Kırığı)
+    "option_c", // 4. Yüzme Havuzu Senaryosu (Kramp)
+    "option_c", // 5. Yemek Yeme Senaryosu (Boğulma)
+    "option_b", // 6. Bisiklet Kazası Senaryosu (Kanama)
+    "option_a", // 7. Sınıf İçi Senaryo (Bilincini Kaybeden Öğrenci)
+    "option_b", // 8. Laboratuvar Kazası Senaryosu (Asit Yanığı)
+    "option_b", // 9. Yaz Kampı Senaryosu (Zehirli Bitki Teması)
+    "option_b", // 10. Spor Salonu Senaryosu (Sırt Ağrısı)
+    "option_b", // 11. Okul Gezisi Senaryosu (Arı Sokması)
+    "option_c", // 12. Trafik Kazası Senaryosu
+    "option_b", // 13. Deprem Senaryosu
+    "option_b", // 14. Sel Senaryosu
+    "option_b", // 15. Orman Yangını Senaryosu
+    "option_b", // 16. Kar Fırtınası Senaryosu
+    "option_b", // 17. Tsunami Senaryosu
+    "option_b", // 18. Kimyasal Yanık Senaryosu
+    "option_b", // 19. Elektrik Çarpması Senaryosu
+    "option_b", // 20. Sıcak Çarpması Senaryosu
+    "option_b", // 21. Arı Sokması Senaryosu (Parkta)
+    "option_c", // 22. Yabancı Cisim Yutma Senaryosu
+    "option_b", // 23. Kalp Krizi Senaryosu
+    "option_b", // 24. Parkinson Hastalığı Senaryosu
+    "option_b"  // 25. Diyabetik Hipoglisemi Senaryosu
+  ];
+  
+
+  module.exports = {firstAidScenarioOptions, firstAidScenarioTitles, firstAidScenarios, correctOptions};
