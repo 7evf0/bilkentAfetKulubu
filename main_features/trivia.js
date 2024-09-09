@@ -63,7 +63,7 @@ async function revealAnswer(client, to, message, answer){
         msgBody = "Doğru cevap!! 🎉 Tebrikler! 😇 Şimdi ödülün için çarkı çevirme zamanı...";
     }
     else{
-        msgBody = `Maalesef yanlış cevabı işaretledin 😢 Doğru cevap ${answer[answer.length-1]} şıkkıydı. Bir sonraki sefere doğru yapacağından eminim 😉`;
+        msgBody = `Maalesef yanlış cevabı işaretledin 😢 Doğru cevap ${correctOptions[scenarioNum][answer.length-1]} şıkkıydı. Bir sonraki sefere doğru yapacağından eminim 😉`;
     }
 
     try {
