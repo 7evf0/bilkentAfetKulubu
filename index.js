@@ -19,7 +19,6 @@ dcClient.login(process.env.TOKEN).then(() => {
 
 // MONGODB REQUIREMENTS
 const mongoDB = require("mongoose");
-const User = require("./userSchema.js");
 
 // WHATSAPP API REQUIREMENTS
 const client = require('twilio')(process.env.ACCOUNT_SID, process.env.AUTH_TOKEN);
@@ -33,9 +32,6 @@ const cors = require("cors");
 
 const fs = require("fs");
 const readline = require("readline");
-
-//const returnMail = require("./emailTemplate.js");
-//const returnAcceptHTML = require("./acceptHTML.js");
 
 // LOCAL REQUIREMENTS
 const generalInfo = require("./main_features/general_info.js")
