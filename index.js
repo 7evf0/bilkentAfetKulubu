@@ -38,6 +38,8 @@ const generalInfo = require("./main_features/general_info.js")
 const displayActivities = require("./main_features/current_activities.js")
 const addApplication = require("./main_features/addApplication.js");
 
+const createListPicker = require("./component_builder/list_builder.js");
+
 // MAIN FUNCTION
 
 async function main(){
@@ -337,12 +339,14 @@ async function sendMainMultipleChoice(to, profileName){
         }
     };
 
-    await client.messages
+    await createListPicker(client); 
+
+    /*await client.messages
             .create({
                 from: process.env.SERVICE_SID,
                 to: to,
                 interactiveMessage: interactiveMessage
-            });
+            });*/
 }
 
 async function sendDiscord(username, text=username, image=null){
