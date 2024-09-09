@@ -163,7 +163,10 @@ async function respond(req){
 
     // trivia options
     if(listID.startsWith('option_')){
-        console.log(req);
+        await client.messages(messageSid)
+            .fetch()
+            .then(message => console.log(message))
+            .catch(error => console.error(error));
     }
 
     // ilk yardım başvuru
