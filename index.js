@@ -341,7 +341,7 @@ async function sendMainMultipleChoice(to, profileName){
             .create({
                 from: process.env.SERVICE_SID,
                 to: to,
-                interactive: interactiveMessage
+                interactiveMessage: interactiveMessage
             });
 }
 

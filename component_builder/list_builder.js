@@ -16,23 +16,19 @@ const authToken = process.env.AUTH_TOKEN;
 async function createTwilioListPicker(client) {
     try {
         // Define the list picker items
-        const listPickerItems = [
+        const options = [
             {
-                item: "SFO to NYC for $299",
-                description: "Owl Air Flight 1337 to LGA",
-                id: "SFO1337"
+                id: 'general_info',
+                item: 'Genel Bilgi🌞',
+                description: 'Bizim kim olduğumuzu ve bu süreçte neler amaçladığımızı öğren.'
             },
             {
-                item: "OAK to Denver for $149",
-                description: "Owl Air Flight 5280 to DEN",
-                id: "OAK5280"
-            },
-            {
-                item: "LAX to Chicago for $199",
-                description: "Owl Air Flight 96 to ORD",
-                id: "LAX96"
+                id: 'current_activities',
+                item: 'Aktif Etkinlikler✨',
+                description: 'Devam eden etkinlikleri göreceksin, bunlardan bazılarına başvurabilirsin'
             }
         ];
+    
 
         // Define the list picker body
         const listPickerBody = "Owl Air Flash Sale! Hurry! Sale ends on {{1}}!";
@@ -45,7 +41,7 @@ async function createTwilioListPicker(client) {
             types: {
                 twilio_list_picker: {
                     body: listPickerBody,
-                    items: listPickerItems
+                    items: options
                 }
             }
         };
