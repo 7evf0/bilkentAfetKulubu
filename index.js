@@ -37,6 +37,7 @@ const readline = require("readline");
 const generalInfo = require("./main_features/general_info.js")
 const displayActivities = require("./main_features/current_activities.js")
 const addApplication = require("./main_features/addApplication.js");
+const displayTrivia = require("./main_features/trivia.js")
 
 const createListPicker = require("./component_builder/list_builder.js");
 
@@ -145,6 +146,10 @@ async function respond(req){
 
     if(listID === "general_info"){
         generalInfo(client, dcClient, userPhone);
+    }
+
+    if(listID === "trivia"){
+        generalInfo(client, userPhone);
     }
 
     if(listID === "current_activities"){
@@ -304,14 +309,14 @@ async function completedContactMsg(to, repliedMsgSID, msg){
 
 async function sendMainMultipleChoice(to, profileName){
 
-    /* TESTING NEW LIST */
+    /* TESTING NEW LIST
     const response = await createListPicker(); 
     const sid = response.sid;
 
-    console.log(sid);
-    
+    console.log(sid);*/
 
-    //const sid = process.env.MAIN_MULTIPLE_CHOICE;
+
+    const sid = process.env.MAIN_MULTIPLE_CHOICE;
 
     await client.messages.create({
                 from: process.env.SERVICE_SID,
