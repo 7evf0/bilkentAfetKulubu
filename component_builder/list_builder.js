@@ -47,7 +47,7 @@ async function createTwilioListPicker(client) {
         };
 
         // Use the Twilio Content API to create the content template
-        const contentTemplate = await twilioClient.content.v1.create(contentCreateRequest);
+        const contentTemplate = await client.content.v1.create(contentCreateRequest);
         console.log(`Created Twilio Content Template SID: ${contentTemplate.sid}`);
     } catch (error) {
         console.error("Error creating content template:", error);
