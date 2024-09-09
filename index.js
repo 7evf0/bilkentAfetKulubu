@@ -305,15 +305,16 @@ async function completedContactMsg(to, repliedMsgSID, msg){
 async function sendMainMultipleChoice(to, profileName){
 
     const sid = await createListPicker(client).sid; 
+    console.log(sid);
 
-    await client.messages.create({
+    /*await client.messages.create({
                 from: process.env.SERVICE_SID,
                 to: to,
                 contentSid: sid,
                 contentVariables: JSON.stringify({
                     1: profileName
                 })
-    });
+    });*/
 }
 
 async function sendDiscord(username, text=username, image=null){
