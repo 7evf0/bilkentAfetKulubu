@@ -37,7 +37,7 @@ const readline = require("readline");
 const generalInfo = require("./main_features/general_info.js")
 const displayActivities = require("./main_features/current_activities.js")
 const addApplication = require("./main_features/addApplication.js");
-const displayTrivia = require("./main_features/trivia.js")
+const {displayTrivia, revealAnswer} = require("./main_features/trivia.js")
 
 const createListPicker = require("./component_builder/list_builder.js");
 
@@ -163,10 +163,10 @@ async function respond(req){
 
     // trivia options
     if(listID.startsWith('option_')){
-        await client.messages(repliedMsgSID)
-            .fetch()
-            .then(message => console.log(message))
-            .catch(error => console.error(error));
+        const message = await client.messages(repliedMsgSID).fetch();
+        const questionContext = message.body;
+
+        revealAnswer(client, userPhone, questionContext, listID);
     }
 
     // ilk yardım başvuru
