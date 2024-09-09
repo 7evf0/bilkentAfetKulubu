@@ -38,6 +38,11 @@ async function createTwilioListPicker() {
                             item: "Aktif Etkinlikler✨",
                             description: "Devam eden etkinlikleri göreceksin, bunlardan bazılarına başvurabilirsin",
                             id: "current_activities"
+                        },
+                        {
+                            item: "Trivia❔",
+                            description: "Önüne gelecek senaryoda ne yapmalısın, doğru seçeneği seç ödülünü kap.",
+                            id: "trivia"
                         }
                     ]
                 }

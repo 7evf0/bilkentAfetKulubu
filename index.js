@@ -304,14 +304,14 @@ async function completedContactMsg(to, repliedMsgSID, msg){
 
 async function sendMainMultipleChoice(to, profileName){
 
-    /* TESTING NEW LIST
+    /* TESTING NEW LIST */
     const response = await createListPicker(); 
     const sid = response.sid;
 
     console.log(sid);
-    */
+    
 
-    const sid = process.env.MAIN_MULTIPLE_CHOICE;
+    //const sid = process.env.MAIN_MULTIPLE_CHOICE;
 
     await client.messages.create({
                 from: process.env.SERVICE_SID,
