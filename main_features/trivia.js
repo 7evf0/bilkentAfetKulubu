@@ -15,7 +15,7 @@ async function displayTrivia(client, to){
     const questionOptions = firstAidScenarioOptions[questionNumber];
 
     const msg = `Senaryo ${questionNumber + 1} ❓\n\n${firstAidScenarioTitles[questionNumber]}\n\n${firstAidScenarios[questionNumber]}\n\nSoru numarasını stanttakilerle paylaşırsan onlar yardımcı olurlar ⛑️`;
-    const options = `Bu senaryoda ne yapmak daha doğru??\n\n${questionOptions[0]}\n${questionOptions[1]}\n${questionOptions[2]}\n${questionOptions[3]}\n`;
+    const options = `Bu senaryoda ne yapmak daha doğru🤔\n\n${questionOptions[0]}\n\n${questionOptions[1]}\n\n${questionOptions[2]}\n\n${questionOptions[3]}\n`;
 
     try {
         await client.messages.create({
