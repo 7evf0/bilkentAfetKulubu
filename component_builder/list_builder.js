@@ -26,7 +26,7 @@ async function createTwilioListPicker() {
             },
             types: {
                 "twilio/list-picker": {
-                    body: "Merhaba {{1}}!\n\n Bilkent Acil Durum ve İlk Yardım'a, yani kısaca BADİ'ye hoşgeldin!!\n\n Sana nasıl yardımcı olabilirim?",
+                    body: "Merhaba {{1}}! 🧸\n\nBilkent Acil Durum ve İlk Yardım'a, yani kısaca BADİ'ye hoşgeldin!! ⛑️\n\nSana nasıl yardımcı olabilirim?",
                     button: "Seçenekler",
                     items: [
                         {
