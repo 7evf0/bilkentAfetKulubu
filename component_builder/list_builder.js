@@ -52,7 +52,8 @@ async function createTwilioListPicker() {
             }
         });
 
-        console.log('Response:', response.data);
+        return response.data;
+        //console.log('Response:', response.data);
     } catch (error) {
         console.error('Error creating content template:', error.response ? error.response.data : error.message);
     }

@@ -306,8 +306,7 @@ async function sendMainMultipleChoice(to, profileName){
 
     const sid = await createListPicker(client).sid; 
 
-    await client.messages
-            .create({
+    await client.messages.create({
                 from: process.env.SERVICE_SID,
                 to: to,
                 contentSid: sid,
