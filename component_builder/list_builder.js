@@ -13,8 +13,8 @@ const axios = require('axios');
 
 async function createTwilioListPicker() {
     const url = 'https://content.twilio.com/v1/Content';
-    const accountSid = process.env.TWILIO_ACCOUNT_SID;
-    const authToken = process.env.TWILIO_AUTH_TOKEN;
+    const accountSid = process.env.ACCOUNT_SID;
+    const authToken = process.env.AUTH_TOKEN;
 
     try {
         // Make the POST request
