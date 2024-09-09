@@ -1,15 +1,27 @@
 const { Twilio } = require("twilio");
 require("dotenv").config();
 
+const createTwilioCard = require("./component_builder/card_builder.js");
 
 /**
  * @param {String} to 
  * @param {Twilio} client
  */
 async function sendSocialMedia(client, to){
+
+    /**
+     * TESTING NEW CARDS
+     * 
+     */
+
+    const response = await createTwilioCard();
+    const sid = response.sid;
+
+    console.log(sid);
+
     try {
         await client.messages.create({
-            body: "Instagram: https://instagram.com/bilkentafetkulubu?igshid=MzRlODBiNWFlZA==\nLinkedIn: https://www.linkedin.com/in/bilkent-afet-kul%C3%BCb%C3%BC-2a19a2289",
+            contentSid: sid,
             from: process.env.SERVICE_SID,
             to: to
         });
